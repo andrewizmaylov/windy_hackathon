@@ -2,6 +2,7 @@
     "private": true,
     "type": "module",
     "scripts": {
+        "prod": "vite build",
         "build": "vite build && vite build --ssr",
         "dev": "vite",
         "lint": "eslint resources/js --ext .js,.vue --ignore-path .gitignore --fix"
