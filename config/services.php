@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'chat_gpt' => [
+		'api_key' => env('CHAT_GPT_API_KEY'),
+    ],
+
 ];

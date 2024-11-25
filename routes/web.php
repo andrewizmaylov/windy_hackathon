@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WeatherRequestController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -24,4 +25,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('forecast', [WeatherRequestController::class, 'index'])->name('forecastIndex');
+Route::post('fetchForecast', [WeatherRequestController::class, 'show'])->name('fetchWeather');
 require __DIR__.'/auth.php';
