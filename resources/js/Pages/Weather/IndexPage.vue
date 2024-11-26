@@ -70,16 +70,4 @@ function selectChoice(choice) {
     selected_choice.value = choice;
 }
 </script>
-<style scoped>
-.base_text {
-	@apply rounded px-2 py-1 text-xs
-}
 
-.base_btn {
-	@apply shrink-0 rounded ring-1 ring-black ring-opacity-5 cursor-pointer h-6
-}
-
-.ringed_box {
-	@apply rounded-lg ring-1 ring-black ring-opacity-5 p-6
-}
-</style>

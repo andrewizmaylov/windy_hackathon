@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PromptController;
 use App\Http\Controllers\WeatherRequestController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -27,4 +28,9 @@ Route::middleware('auth')->group(function () {
 
 Route::get('forecast', [WeatherRequestController::class, 'index'])->name('forecastIndex');
 Route::post('fetchForecast', [WeatherRequestController::class, 'show'])->name('fetchWeather');
-require __DIR__.'/auth.php';
+
+Route::get('prompts', [PromptController::class, 'index'])->name('promptIndex');
+Route::get('prompt/create', [PromptController::class, 'create'])->name('promptCreate');
+Route::get('prompt/{prompt}', [PromptController::class, 'update'])->name('promptUpdate');
+Route::post('prompt', [PromptController::class, 'store'])->name('promptStore');
+//require __DIR__.'/auth.php';
