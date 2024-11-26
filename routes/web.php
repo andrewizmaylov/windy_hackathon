@@ -36,5 +36,6 @@ Route::get('prompt/{prompt}', [PromptController::class, 'update'])->name('prompt
 Route::post('prompt', [PromptController::class, 'store'])->name('promptStore');
 
 
+Route::get('api/v1/prompts', [ApiController::class, 'getPrompts'])->name('getPrompts')->middleware('api_middleware');
 Route::get('api/v1/forecast-by-coordinates-simple', [ApiController::class, 'forecastByCoordinatesSimple'])->name('forecastByCoordinatesSimple')->middleware('api_middleware');
 Route::get('api/v1/forecast-by-coordinates-ai', [ApiController::class, 'forecastByCoordinatesAi'])->name('forecastByCoordinatesAi')->middleware('api_middleware');

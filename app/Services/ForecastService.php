@@ -81,9 +81,9 @@ class ForecastService
 	/**
 	 * @throws GuzzleException
 	 */
-	public static function getAiForecast(string $weather_summary, Prompt $prompted = null)
+	public static function getAiForecast(string $weather_summary, string $prompt_message = null)
 	{
-		$prompt = $prompted ?: Prompt::first()->text;
+		$prompt = $prompt_message ?: Prompt::first()->text;
 
 		try {
 			return (new ChatGptService())->handleRequest($weather_summary, $prompt);
