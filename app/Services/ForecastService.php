@@ -11,7 +11,7 @@ class ForecastService
 {
 	use HasLogError;
 
-	public static function getData(array $spot): JsonResponse
+	public static function getData(array $spot)
 	{
 		$url = self::getUrlFromSpot($spot);
 		$client = new Client();
@@ -27,8 +27,7 @@ class ForecastService
 				]
 			);
 
-			$data = json_decode($response->getBody(), true);
-			return response()->json($data);
+			return json_decode($response->getBody(), true);
 		} catch (\Exception $e) {
 			return self::logError($e);
 		}
@@ -38,7 +37,7 @@ class ForecastService
 	{
 		$url = 'https://api.windyapp.co/apiV9.php';
 
-		$from_ts = time();
+		$from_ts = strtotime('today 8am');
 		$to_ts = strtotime('+48 hours', $from_ts);
 
 		$models = ['ecmwf','gfs27'];
