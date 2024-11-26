@@ -31,7 +31,7 @@ class ForecastService
 
 			$forecast = json_decode($response->getBody(), true);
 
-			return self::proceedDataWithPython($forecast);
+			return self::proceedDataWithPython($forecast) . json_encode($coordinates);
 		} catch (\Exception $e) {
 			return self::logError($e);
 		}
