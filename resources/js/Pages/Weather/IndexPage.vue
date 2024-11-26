@@ -1,73 +1,47 @@
 <template>
-    <section class="dark:bg-dark mx-auto w-[80%] rounded-lg bg-white p-6">
-        <input type="text"
-               v-model="search"
-               class="w-full rounded base_text"/>
-        <div v-if="search.length"
-             class="my-6 max-h-[100px] flex flex-wrap gap-4 ringed_box overflow-auto">
-            <img src="/images/walking_dog.gif"
-                 alt="walking_dog"
-                 class="h-24 mx-auto"
-                 v-if="show_spinner"/>
-            <h5 class="base_text base_btn"
-                v-for="spot in output"
-                :key="spot.id"
-                @click="fetchForecast(spot)"
-                v-else>
-                {{ spot?.name }}
-            </h5>
-        </div>
-        <div class="ringed_box my-6"
-             v-if="forecast?.system_fingerprint">
-            <section class="flex items-center space-x-4 mb-4"
-                     v-for="(choice, i) in forecast.choices"
-                     :key="i">
-                <span class="base_text base_btn"
-                      @click="selectChoice(choice)"> Choice {{ i + 1 }}</span>
+    <div class="bg-white text-black/50 dark:bg-black dark:text-white/50 flex min-h-screen flex-col items-center pt-6 sm:justify-center">
+        <section class="max-w-[540px] rounded-0 shadow-md sm:rounded-[16px] overflow-hidden">
+            <Header />
+	        
+            <section class="bg-white rounded-[16px] md:p-6 sm:p-4 p-2 w-full">
+                <DaySelector @day_selected="daySelected" />
+                <section class="space-y-4 divide-y divide-gray-200">
+                    <WeatherSummary  :data="qwa"/>
+		            
+                    <WeatherBlock v-for="chank in forecast"
+                                  :key="chank.id"
+                                  :data="qwe"/>
+                </section>
             </section>
-		    
-            <p v-html="selected_choice.message.content"/>
-        </div>
-    </section>
-	
+        </section>
+    </div>
 </template>
 <script setup>
+import {Link} from '@inertiajs/vue3';
+import DaySelector from '@/Pages/Weather/Components/DaySelector.vue';
 import {computed, ref} from 'vue';
+import Header from '@/Pages/Weather/Components/Header.vue';
+import WeatherSummary from '@/Pages/Weather/Components/WeatherSummary.vue';
+import WeatherBlock from '@/Pages/Weather/Components/WeatherBlock.vue';
 
-const props = defineProps({
-    spots: {
-        type: Array,
-        required: true,
-    },
-});
+let summary = computed(() => Object.assign({}, { title: 'lorem', summary: 'lorem'}));
 
-let selected_choice = ref(null);
-let search = ref('');
-let show_spinner = ref(false);
+let qwa = {
+    title: 'Отличный денек гулять!',
+    summary:'Погода спокойная, приятная. Идеально для прогулок, активностей на улице или встреч на террасе. Хочешь на природу? Помогу с маршрутом!'
+};
+let qwe = {
+    header: 'Утро',
+    temperature: '12-14',
+    wind: '13-14',
+    summary: 'Оденься потеплее, ночью будет ветерок и небольшая влажность, может выпасть снег.',
+};
 
-let output = computed(() =>
-    search.value.length
-        ? props.spots.original.filter((spot) =>
-            spot.name.toLowerCase().includes(search.value.toLowerCase()),
-        )
-        : props.spots.original,
-);
-
-let forecast = ref({});
-
-function fetchForecast(spot) {
-    search.value = spot.name;
-    show_spinner.value = true;
-    axios.post(route('fetchWeather'), {spot: spot}).then((response) => {
-        forecast.value = response.data;
-        selected_choice.value = response.data?.choices[0];
-        show_spinner.value = false;
-        search.value = '';
-    });
+function daySelected(day) {
+    console.log(day);
 }
 
-function selectChoice(choice) {
-    selected_choice.value = choice;
-}
+let forecast = ref([
+    1,2,3,4
+]);
 </script>
-
