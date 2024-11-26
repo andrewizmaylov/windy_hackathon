@@ -23,9 +23,13 @@ class ApiController extends Controller
 	/**
 	 * @throws GuzzleException
 	 */
-	public function forecastByCoordinatesAi(): \Illuminate\Http\JsonResponse
+	public function forecastByCoordinatesAi(): void
 	{
-		return ForecastService::getAiForecast(self::forecastByCoordinatesSimple());
+		$forecast = self::forecastByCoordinatesSimple();
+		$data = ForecastService::getAiForecast($forecast);
+		$first_result = json_decode($data->content())->choices[0];
+
+		echo $first_result->message->content;
 	}
 
 	private static function getDataFromRequest()

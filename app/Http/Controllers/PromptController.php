@@ -30,8 +30,9 @@ class PromptController extends Controller
 			'text' => 'required',
 			'type' => 'required',
 		]);
+		$id = $request['id'] ?? null;
 
-		Prompt::create($validated);
+		Prompt::updateOrCreate(['id' => $id], $validated);
 
 		return back()->with('success', 'Prompt has been created.');
 	}

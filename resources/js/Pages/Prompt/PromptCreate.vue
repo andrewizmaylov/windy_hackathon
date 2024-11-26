@@ -63,6 +63,7 @@ const props = defineProps({
 
 let form = useForm({
     method: 'POST',
+    id: props?.prompt?.id ?? null,
     type: props?.prompt?.type ?? null,
     text: props?.prompt?.text ?? null,
 });

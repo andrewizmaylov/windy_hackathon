@@ -86,7 +86,7 @@ class ForecastService
 		$prompt = $prompted ?: Prompt::first()->text;
 
 		try {
-			return (new ChatGptService())->handleRequest(json_encode($weather_summary), $prompt);
+			return (new ChatGptService())->handleRequest($weather_summary, $prompt);
 		} catch (\Exception $exception) {
 			echo $exception->getMessage();
 		}
