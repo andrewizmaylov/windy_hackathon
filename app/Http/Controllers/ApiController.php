@@ -39,9 +39,7 @@ class ApiController extends Controller
 
 	private static function getDataFromRequest()
 	{
-		$content = file_get_contents('php://input');
-
-		return json_decode($content, true);
+		return $_GET ?? json_decode(file_get_contents('php://input'), true);
 	}
 
 
