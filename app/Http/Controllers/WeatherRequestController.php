@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Prompt;
 use App\Repositories\SpotsRepository;
 use App\Services\ChatGptService;
 use App\Services\ForecastService;
@@ -31,26 +32,14 @@ class WeatherRequestController extends Controller
 	 */
 	public static function show(Request $request): JsonResponse
 	{
-		$forecast = ForecastService::getData($request['spot']);
-		$data = json_encode($forecast['response']['forecast']);
+		$coordinates = [
+			'lat' => $request['spot']['lat'],
+			'lon' => $request['spot']['lon'],
+		];
 
-		$command = "python3 " . base_path('resources/scripts/WeatherProcessorV02.py') . " " . escapeshellarg($data);
-		$weather_summary = shell_exec($command . " 2>&1");  // Capture both stdout and stderr
+		// Получаем данные по координатам
+		$forecast = ForecastService::getData($coordinates);
 
-		if ($weather_summary === null) {
-			return response()->json(['error' => 'Error executing Python script'], 500);
-		}
-
-//		$prompt = $request['prompt'];
-		$prompt = 'Ты мой лучший друг метеорологб объясни мне все кратко и простыми словами';
-		try {
-			return (new ChatGptService())->handleRequest(json_encode($weather_summary), $prompt);
-		} catch (\Exception $exception) {
-			echo $exception->getMessage();
-		}
-
-		return response()->json([
-			'success' => false,
-		]);
+		return ForecastService::getAiForecast($forecast);
 	}
 }

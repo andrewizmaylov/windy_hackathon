@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromptController;
 use App\Http\Controllers\WeatherRequestController;
@@ -33,4 +34,7 @@ Route::get('prompts', [PromptController::class, 'index'])->name('promptIndex');
 Route::get('prompt/create', [PromptController::class, 'create'])->name('promptCreate');
 Route::get('prompt/{prompt}', [PromptController::class, 'update'])->name('promptUpdate');
 Route::post('prompt', [PromptController::class, 'store'])->name('promptStore');
-//require __DIR__.'/auth.php';
+
+
+Route::get('api/v1/forecast-by-coordinates-simple', [ApiController::class, 'forecastByCoordinatesSimple'])->name('forecastByCoordinatesSimple')->middleware('api_middleware');
+Route::get('api/v1/forecast-by-coordinates-ai', [ApiController::class, 'forecastByCoordinatesAi'])->name('forecastByCoordinatesAi')->middleware('api_middleware');
