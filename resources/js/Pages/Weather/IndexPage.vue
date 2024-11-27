@@ -12,10 +12,9 @@
 	            
                 <div v-if="ai_forecast"
                      class="my-4 space-y-1">
-                    <section v-html="marked.parse(content[0])"
-                             v-if="day_selected === 1"/>
-                    <section v-html="marked.parse(content[1])"
-                             v-else/>
+                    <section v-html="marked.parse(content[1])" />
+                    <section v-html="marked.parse(content[day_selected+1])" />
+                    <section v-html="marked.parse(content[4])" />
                 </div>
             </section>
         </section>
@@ -65,7 +64,7 @@ const fetchForecast = async () => {
         }));
 		
         ai_forecast.value = await response.data;
-        content.value = first_message.value.split('|--- NEXT DAY ---|');
+        content.value = first_message.value.split('««««««');
     } catch (error) {
         console.error('Error fetching additional data:', error);
     }
