@@ -52,10 +52,10 @@ let search = ref('');
 
 let output = computed(() =>
     search.value.length
-        ? props.spots.original.filter((spot) =>
+        ? props.spots.filter((spot) =>
             spot.name.toLowerCase().includes(search.value.toLowerCase()),
         )
-        : props.spots.original,
+        : props.spots,
 );
 
 function fetchForecast(spot) {
