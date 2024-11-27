@@ -18,13 +18,23 @@
 </template>
 <script setup>
 import DaySelector from '@/Pages/Weather/Components/DaySelector.vue';
-import {computed, ref} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 import Header from '@/Pages/Weather/Components/Header.vue';
 import WeatherSummary from '@/Pages/Weather/Components/WeatherSummary.vue';
 import WeatherBlock from '@/Pages/Weather/Components/WeatherBlock.vue';
 
 let summary = computed(() => Object.assign({}, { title: 'lorem', summary: 'lorem'}));
-
+const props = defineProps({
+    spots: {
+        type: Object,
+    },
+    simple: {
+        type: String,
+    },
+    request_data: {
+        type: Object,
+    }
+});
 let qwa = {
     title: 'Отличный денек гулять!',
     summary:'Погода спокойная, приятная. Идеально для прогулок, активностей на улице или встреч на террасе. Хочешь на природу? Помогу с маршрутом!'
@@ -43,4 +53,23 @@ function daySelected(day) {
 let forecast = ref([
     1,2,3,4
 ]);
+
+
+const ai_forecast = ref(null);
+const fetchForecast = async () => {
+    try {
+        const response = await axios.post(route('fetchWeather', {
+            forecast: props.simple,
+            prompt: props.request_data?.prompt
+        }));
+        ai_forecast.value = await response.json();
+    } catch (error) {
+        console.error('Error fetching additional data:', error);
+    }
+};
+
+onMounted(() => {
+    fetchForecast();
+});
+
 </script>

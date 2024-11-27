@@ -13,7 +13,7 @@ class PromptController extends Controller
 	public function index(): \Inertia\Response
 	{
 		return Inertia::render('Prompt/PromptIndex', [
-			'prompts' => Prompt::all(),
+			'prompts' => Prompt::where('user_id', auth()->id())->get(),
 		]);
     }
 
@@ -32,7 +32,10 @@ class PromptController extends Controller
 		]);
 		$id = $request['id'] ?? null;
 
-		Prompt::updateOrCreate(['id' => $id], $validated);
+		Prompt::updateOrCreate(
+			['id' => $id],
+			array_merge($validated, ['user_id' => auth()->id()])
+		);
 
 		return back()->with('success', 'Prompt has been created.');
 	}

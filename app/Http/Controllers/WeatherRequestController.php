@@ -16,30 +16,31 @@ use Inertia\Response;
 
 class WeatherRequestController extends Controller
 {
-	public function index(): Response
+	/**
+	 * @throws GuzzleException
+	 */
+	public function index(Request $request): Response
 	{
 		$spots = Cache::remember('spots', 3600, function () {
 			return SpotsRepository::index();
 		});
 
+		$request_data = ApiController::getDataFromRequest();
+
+		$forecast = ApiController::forecastSimple();
+
 		return Inertia::render('Weather/IndexPage', [
-			'spots' => $spots
+			'spots' => $spots,
+			'simple' => $forecast,
+			'request_data' => $request_data
 		]);
 	}
 
 	/**
 	 * @throws GuzzleException
 	 */
-	public static function show(Request $request): JsonResponse
+	public function fetchForecast(Request $request): JsonResponse
 	{
-		$coordinates = [
-			'lat' => $request['spot']['lat'],
-			'lon' => $request['spot']['lon'],
-		];
-
-		// Получаем данные по координатам
-		$forecast = ForecastService::getData($coordinates);
-
-		return ForecastService::getAiForecast($forecast);
+		return ForecastService::getAiForecast($request['forecast'], ApiController::getCurrentPromptsFromQuery());
 	}
 }

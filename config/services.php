@@ -39,4 +39,10 @@ return [
 		'api_key' => env('CHAT_GPT_API_KEY'),
     ],
 
+	'geo' => [
+		'default' => [
+			'lat' => 56.750833,
+			'lon' => 60.701389,
+		]
+	],
 ];

@@ -16,7 +16,7 @@
                          class="ring-1 ring-gray-200 rounded-3xl p-8 col-span-1 cursor-pointer hover:shadow"
                          @click="router.get(route('promptUpdate', {prompt: prompt.id}))" >
                         <h2 :id="prompt.id"
-                            :class="['text-gray-900 text-lg/8 font-semibold']">{{ prompt.type }}</h2>
+                            :class="['text-gray-900 text-lg/8 font-semibold']">{{ prompt.type }} ID: {{ prompt.id }}</h2>
                         <p v-html="prompt.text" />
                     </div>
                 </div>

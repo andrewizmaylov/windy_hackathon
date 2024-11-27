@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('forecast', [WeatherRequestController::class, 'index'])->name('forecastIndex');
-Route::post('fetchForecast', [WeatherRequestController::class, 'show'])->name('fetchWeather');
+Route::post('fetchForecast', [WeatherRequestController::class, 'fetchForecast'])->name('fetchWeather');
 
 
 Route::middleware(['auth'])->group(function () {
@@ -40,7 +40,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['api_middleware'])->group(function () {
 	Route::get('api/v1/prompts', [ApiController::class, 'getPrompts'])->name('getPrompts');
-	Route::get('api/v1/forecast-by-coordinates-simple', [ApiController::class, 'forecastByCoordinatesSimple'])->name('forecastByCoordinatesSimple');
+	Route::get('api/v1/forecast-by-coordinates-simple', [ApiController::class, 'forecastSimple'])->name('forecastSimple');
 	Route::get('api/v1/forecast-by-coordinates-ai', [ApiController::class, 'forecastByCoordinatesAi'])->name('forecastByCoordinatesAi');
 });
 
