@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('forecast', [WeatherRequestController::class, 'index'])->name('forecastIndex');
+Route::get('search', [WeatherRequestController::class, 'searchPage'])->name('forecastSearchPage');
 Route::post('fetchForecast', [WeatherRequestController::class, 'fetchForecast'])->name('fetchWeather');
 
 

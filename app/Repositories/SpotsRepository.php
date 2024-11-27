@@ -15,7 +15,7 @@ class SpotsRepository
 		$client = new Client();
 		try {
 			$response = $client->get(
-				'https://windyapp.co/v10/spots',
+				'https://api.windyapp.co/apiV9.php?method=getPublicSpots&timestamp=0&page=0',
 				[
 					'stream' => true,
 					'headers' => [

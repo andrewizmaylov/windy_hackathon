@@ -36,6 +36,15 @@ class WeatherRequestController extends Controller
 		]);
 	}
 
+	public function searchPage()
+	{
+		return Inertia::render('Weather/SearchPage', [
+			'spots' => Cache::remember('spots', 3600, function () {
+				return SpotsRepository::index();
+			})
+		]);
+	}
+
 	/**
 	 * @throws GuzzleException
 	 */
