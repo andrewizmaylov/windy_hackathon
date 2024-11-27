@@ -3,7 +3,7 @@
         <section class="max-w-[540px] rounded-0 shadow-md sm:rounded-[16px] overflow-hidden">
             <Header />
 	        
-            <section class="bg-white rounded-[16px] md:p-6 sm:p-4 p-2 w-full">
+            <section class="rounded-[16px] md:p-6 sm:p-4 p-2 w-full">
                 <DaySelector @day_selected="daySelected" />
                 <section class="space-y-4 divide-y divide-gray-200">
                     <WeatherSummary  :data="qwa"/>
@@ -17,7 +17,6 @@
     </div>
 </template>
 <script setup>
-import {Link} from '@inertiajs/vue3';
 import DaySelector from '@/Pages/Weather/Components/DaySelector.vue';
 import {computed, ref} from 'vue';
 import Header from '@/Pages/Weather/Components/Header.vue';

@@ -1,5 +1,11 @@
 <script setup>
 import {Link, Head} from '@inertiajs/vue3';
+defineProps({
+    user_data: {
+        type: Array,
+        required: true,
+    }
+});
 </script>
 
 <template>
@@ -10,7 +16,7 @@ import {Link, Head} from '@inertiajs/vue3';
                 <section class="flex items-center justify-between space-x-4 w-full cursor-pointer">
                     <img src="/images/logo.svg"
                          alt="logo">
-                    <section class="font-extrabold text-5xl text-gray-900">
+                    <section class="font-extrabold text-5xl">
                         <h1>Simple</h1>
                         <h1>Weather</h1>
                     </section>

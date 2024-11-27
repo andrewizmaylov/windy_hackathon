@@ -1,6 +1,9 @@
 <template>
     <section class="bg-[#F0F5F9] rounded-full flex items-center">
-        <h6 :class="[day.active ? 'bg-[#181D20] text-white':'text-[#181D20]', 'w-1/2 rounded-full text-center cursor-pointer font-medium']"
+        <h6 :class="[
+                day.active ? 'bg-[#181D20] text-white dark:bg-gray-300 dark:text-gray-900':'text-[#181D20]',
+                'w-1/2 rounded-full text-center cursor-pointer font-medium'
+            ]"
             v-for="day in dates"
             :key="day.id"
             @click="switchActive(day)">{{ day.title }}</h6>
