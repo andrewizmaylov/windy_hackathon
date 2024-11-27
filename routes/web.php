@@ -31,6 +31,7 @@ Route::get('forecast', [WeatherRequestController::class, 'index'])->name('foreca
 Route::get('search', [WeatherRequestController::class, 'searchPage'])->name('forecastSearchPage');
 Route::post('fetchForecast', [WeatherRequestController::class, 'fetchForecast'])->name('fetchWeather');
 
+Route::get('all_prompts', [PromptController::class, 'indexALl'])->name('promptIndexAll');
 
 Route::middleware(['auth'])->group(function () {
 	Route::get('prompts', [PromptController::class, 'index'])->name('promptIndex');

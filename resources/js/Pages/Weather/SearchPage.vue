@@ -25,7 +25,7 @@
             </Link>
         </div>
 	    
-        <p class="text-xs my-2 hidden"
+        <p class="text-xs my-2"
            id="location" />
 	    
         <TopMenu class="absolute top-0 left-0"/>

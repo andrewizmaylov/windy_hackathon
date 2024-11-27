@@ -19,10 +19,7 @@ class WeatherRequestController extends Controller
 	 */
 	public function index(Request $request): Response
 	{
-		$spots = Cache::remember('spots', 3600, function () {
-			return SpotsRepository::index();
-		});
-
+		$spots = SpotsRepository::index();
 		$request_data = ApiController::getDataFromRequest();
 
 		$forecast = Cache::remember('forecasts:' . $request_data['lat'] . ':' . $request_data['lon'], 60*60*3, function () {
@@ -32,16 +29,15 @@ class WeatherRequestController extends Controller
 		return Inertia::render('Weather/IndexPage', [
 			'spots' => $spots,
 			'simple' => $forecast,
-			'request_data' => $request_data
+			'request_data' => $request_data,
+			'api_key' => config('services.geo.google_api_key')
 		]);
 	}
 
 	public function searchPage()
 	{
 		return Inertia::render('Weather/SearchPage', [
-			'spots' => Cache::remember('spots', 3600, function () {
-				return SpotsRepository::index();
-			})
+			'spots' => SpotsRepository::index()
 		]);
 	}
 

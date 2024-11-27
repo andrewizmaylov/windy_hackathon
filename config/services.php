@@ -43,6 +43,7 @@ return [
 		'default' => [
 			'lat' => 56.750833,
 			'lon' => 60.701389,
-		]
+		],
+		'google_api_key' => env('GOOGLE_API'),
 	],
 ];

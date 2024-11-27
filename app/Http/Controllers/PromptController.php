@@ -16,6 +16,12 @@ class PromptController extends Controller
 			'prompts' => Prompt::where('user_id', auth()->id())->get(),
 		]);
     }
+	public function indexAll(): \Inertia\Response
+	{
+		return Inertia::render('Prompt/PromptIndex', [
+			'prompts' => Prompt::all(),
+		]);
+    }
 
 	public function create(): \Inertia\Response
 	{

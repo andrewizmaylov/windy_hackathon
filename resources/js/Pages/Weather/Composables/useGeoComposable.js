@@ -21,7 +21,6 @@ export default () => {
 		if (lat.value && lon.value) {
 			url.value = `?lat=${lat.value}&lon=${lon.value}`;
 		}
-		document.getElementById('location').innerHTML = `Latitude: ${lat.value}, Longitude: ${lon.value}`;
 	}
 
 // Error callback
