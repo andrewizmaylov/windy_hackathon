@@ -41,7 +41,7 @@ class ForecastService
 	{
 		$url = 'https://api.windyapp.co/apiV9.php';
 
-		$from_ts = strtotime('today 8am');
+		$from_ts = strtotime('today 6am');
 		$to_ts = strtotime('+48 hours', $from_ts);
 
 		$models = ['ecmwf','gfs27'];

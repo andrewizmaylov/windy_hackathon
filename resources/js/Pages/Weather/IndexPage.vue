@@ -5,13 +5,8 @@
 	        
             <section class="rounded-[16px] md:p-6 sm:p-4 p-2 w-full">
                 <DaySelector @day_selected="daySelected" />
-                <section class="space-y-4 divide-y divide-gray-200">
-                    <WeatherSummary  :data="qwa"/>
-		            
-                    <WeatherBlock v-for="chank in forecast"
-                                  :key="chank.id"
-                                  :data="qwe"/>
-                </section>
+	            
+                <DayForecast :data="intervals" />
             </section>
         </section>
     </div>
@@ -20,10 +15,8 @@
 import DaySelector from '@/Pages/Weather/Components/DaySelector.vue';
 import {computed, onMounted, ref} from 'vue';
 import Header from '@/Pages/Weather/Components/Header.vue';
-import WeatherSummary from '@/Pages/Weather/Components/WeatherSummary.vue';
-import WeatherBlock from '@/Pages/Weather/Components/WeatherBlock.vue';
+import DayForecast from '@/Pages/Weather/Components/DayForecast.vue';
 
-let summary = computed(() => Object.assign({}, { title: 'lorem', summary: 'lorem'}));
 const props = defineProps({
     spots: {
         type: Object,
@@ -35,31 +28,24 @@ const props = defineProps({
         type: Object,
     }
 });
-let qwa = {
-    title: 'Отличный денек гулять!',
-    summary:'Погода спокойная, приятная. Идеально для прогулок, активностей на улице или встреч на террасе. Хочешь на природу? Помогу с маршрутом!'
-};
-let qwe = {
-    header: 'Утро',
-    temperature: '12-14',
-    wind: '13-14',
-    summary: 'Оденься потеплее, ночью будет ветерок и небольшая влажность, может выпасть снег.',
-};
 
+
+let day_selected = ref(1);
 function daySelected(day) {
-    console.log(day);
+    day_selected.value = day.id;
 }
-
-let forecast = ref([
-    1,2,3,4
-]);
-
+let intervals = computed(() => {
+    let data = props.simple.split('Weather Summary for ');
+	
+    return day_selected.value ? data.slice(1, 9) : data.slice(9, 17);
+});
 
 const ai_forecast = ref(null);
 const fetchForecast = async () => {
     try {
         const response = await axios.post(route('fetchWeather', {
             forecast: props.simple,
+            request_data: props.request_data,
             prompt: props.request_data?.prompt
         }));
         ai_forecast.value = await response.json();
