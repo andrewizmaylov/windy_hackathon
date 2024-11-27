@@ -3,28 +3,20 @@
 namespace App\Jobs;
 
 use App\Repositories\SpotsRepository;
+use Illuminate\Bus\Batchable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
-use Illuminate\Support\Facades\Http;
 
-class RefetchSpots implements ShouldQueue
+class FetchSpotsByUrl implements ShouldQueue
 {
     use Queueable;
+	use Batchable;
 
-    /**
-     * Create a new job instance.
-     */
-    public function __construct()
-    {
-        //
-    }
+    public function __construct(private readonly string $url) {}
 
-    /**
-     * Execute the job.
-     */
     public function handle(): void
     {
-	    // Make the API request for the current page
-	    $response = Http::get($baseUrl);
+		sleep(3);
+	    SpotsRepository::fetchChankByUrl($this->url);
     }
 }
