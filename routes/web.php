@@ -30,12 +30,20 @@ Route::middleware('auth')->group(function () {
 Route::get('forecast', [WeatherRequestController::class, 'index'])->name('forecastIndex');
 Route::post('fetchForecast', [WeatherRequestController::class, 'show'])->name('fetchWeather');
 
-Route::get('prompts', [PromptController::class, 'index'])->name('promptIndex');
-Route::get('prompt/create', [PromptController::class, 'create'])->name('promptCreate');
-Route::get('prompt/{prompt}', [PromptController::class, 'update'])->name('promptUpdate');
-Route::post('prompt', [PromptController::class, 'store'])->name('promptStore');
+
+Route::middleware(['auth'])->group(function () {
+	Route::get('prompts', [PromptController::class, 'index'])->name('promptIndex');
+	Route::get('prompt/create', [PromptController::class, 'create'])->name('promptCreate');
+	Route::get('prompt/{prompt}', [PromptController::class, 'update'])->name('promptUpdate');
+	Route::post('prompt', [PromptController::class, 'store'])->name('promptStore');
+});
+
+Route::middleware(['api_middleware'])->group(function () {
+	Route::get('api/v1/prompts', [ApiController::class, 'getPrompts'])->name('getPrompts');
+	Route::get('api/v1/forecast-by-coordinates-simple', [ApiController::class, 'forecastByCoordinatesSimple'])->name('forecastByCoordinatesSimple');
+	Route::get('api/v1/forecast-by-coordinates-ai', [ApiController::class, 'forecastByCoordinatesAi'])->name('forecastByCoordinatesAi');
+});
 
 
-Route::get('api/v1/prompts', [ApiController::class, 'getPrompts'])->name('getPrompts')->middleware('api_middleware');
-Route::get('api/v1/forecast-by-coordinates-simple', [ApiController::class, 'forecastByCoordinatesSimple'])->name('forecastByCoordinatesSimple')->middleware('api_middleware');
-Route::get('api/v1/forecast-by-coordinates-ai', [ApiController::class, 'forecastByCoordinatesAi'])->name('forecastByCoordinatesAi')->middleware('api_middleware');
+require __DIR__.'/auth.php';
+
